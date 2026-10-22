@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DATSU Store - Trang chủ</title>
-    <!-- Đã chuẩn hóa đường dẫn CSS từ thư mục gốc -->
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
@@ -20,9 +19,9 @@
     <nav class="shop-subnav">
       <div class="shop-subnav-inner">
         <a href="index.html" class="active">Trang chủ</a>
-        <a href="html/products.html">Sản phẩm</a>
-        <a href="html/contact.html">Liên hệ</a>
-        <a href="html/about.html">Giới thiệu</a>
+        <a href="products.html">Sản phẩm</a>
+        <a href="contact.html">Liên hệ</a>
+        <a href="about.html">Giới thiệu</a>
       </div>
     </nav>
 
@@ -32,11 +31,11 @@
         <div class="promo-banner">
           <h1>SIÊU KHUYẾN MÃI</h1>
           <p>Giảm giá lên đến 50% cho thiết bị điện tử và phụ kiện cao cấp</p>
-          <a href="html/products.html" class="promo-btn">Xem tất cả sản phẩm</a>
+          <a href="products.html" class="promo-btn">Xem tất cả sản phẩm</a>
         </div>
       </div>
 
-      <!-- KHUNG HOT SALE CỐ ĐỊNH 4 CỘT TRÊN MỘT HÀNG -->
+      <!-- KHUNG HOT SALE CỐ ĐỊNH 4 CỘT -->
       <div class="container" style="padding-bottom: 20px">
         <div
           style="
@@ -88,7 +87,6 @@
               <span id="countdown-timer" style="color: #fbbf24">02 : 20 : 13 : 59</span>
             </div>
           </div>
-          <!-- Grid cố định 4 cột -->
           <div
             id="hotsale-product-grid"
             style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px"
@@ -114,24 +112,18 @@
         >
           <div>
             <span
-              style="
-                font-size: 12px;
-                font-weight: 700;
-                color: #b45309;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-              "
+              style="font-size: 12px; font-weight: 700; color: #b45309; text-transform: uppercase"
               >Được yêu thích</span
             >
             <h2 style="font-size: 24px; font-weight: 700; color: #1e293b; margin-top: 2px">
               Sản phẩm bán chạy
             </h2>
             <p style="font-size: 13px; color: #64748b; margin-top: 2px">
-              Những lựa chọn được khách hàng yêu thích nhất tại ShopDienTu.
+              Những lựa chọn được khách hàng yêu thích nhất tại DATSU Store.
             </p>
           </div>
           <a
-            href="html/products.html"
+            href="products.html"
             style="font-size: 14px; font-weight: 600; color: #2563eb; text-decoration: none"
             >Xem tất cả →</a
           >
@@ -144,14 +136,12 @@
       <div class="container"><p>© 2026 ShopDienTu - DATSU - FPT Polytechnic</p></div>
     </footer>
 
-    <!-- Đã chỉnh sửa đường dẫn gọi app.js từ gốc -->
     <script src="js/app.js"></script>
     <script>
       function startCountdown() {
         let totalSeconds = 2 * 24 * 60 * 60 + 20 * 60 * 60 + 13 * 60 + 59;
         const timerEl = document.getElementById("countdown-timer");
         if (!timerEl) return;
-
         setInterval(() => {
           if (totalSeconds <= 0) totalSeconds = 3 * 24 * 60 * 60;
           totalSeconds--;
@@ -167,39 +157,10 @@
         startCountdown();
         if (typeof products === "undefined") return;
 
-        // 1. Render Hot Sale (4 sản phẩm)
-        const hotSaleGrid = document.getElementById("hotsale-product-grid");
-        if (hotSaleGrid) {
-          const hotItems = products.slice(0, 4);
-          hotSaleGrid.innerHTML = hotItems
-            .map(
-              (p) => `
-            <div class="product-card">
-                <img src="${p.image}" alt="${p.name}" />
-                <div class="product-info">
-                    <h3>${p.name}</h3>
-                    <p>${p.shortDescription || ""}</p>
-                    <div class="price">
-                        ${p.oldPrice ? `<span class="old-price">${formatPrice(p.oldPrice)}</span>` : ""}
-                        <span class="sale-price">${formatPrice(p.price)}</span>
-                    </div>
-                    <div style="font-size: 11px; color: #b91c1c; font-weight: 700; margin-bottom: 8px;">🔥 Tồn kho: còn ${p.stock} sản phẩm (Giới hạn)</div>
-                    <div class="card-actions">
-                        <a href="html/detail.html?id=${p.id}" class="btn" style="flex:1; background:#fff; color:#2563eb; border:1px solid #cbd5e1; text-align:center;">Chi tiết</a>
-                        <button class="btn" type="button" onclick="addToCart(${p.id})" style="flex:1; background:#fbbf24; color:#111827;">🛒 Thêm vào giỏ</button>
-                    </div>
-                </div>
-            </div>
-          `,
-            )
-            .join("");
-        }
-
-        // 2. Render sản phẩm nổi bật
-        const featuredGrid = document.getElementById("featured-product-grid");
-        if (featuredGrid) {
-          const featured = products.slice(4, 8);
-          featuredGrid.innerHTML = featured
+        const renderGrid = (id, items) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.innerHTML = items
             .map(
               (p) => `
             <div class="product-card">
@@ -213,48 +174,24 @@
                     </div>
                     <div style="font-size: 11px; color: #b91c1c; font-weight: 700; margin-bottom: 8px;">🔥 Tồn kho: còn ${p.stock} sản phẩm</div>
                     <div class="card-actions">
-                        <a href="html/detail.html?id=${p.id}" class="btn" style="flex:1; background:#fff; color:#2563eb; border:1px solid #cbd5e1; text-align:center;">Chi tiết</a>
-                        <button class="btn" type="button" onclick="addToCart(${p.id})" style="flex:1; background:#fbbf24; color:#111827;">🛒 Thêm vào giỏ</button>
+                        <a href="detail.html?id=${p.id}" class="btn" style="flex:1; background:#fff; color:#2563eb; border:1px solid #cbd5e1; text-align:center;">Chi tiết</a>
+                        <button class="btn" type="button" onclick="addToCart(${p.id})" style="flex:1; background:#fbbf24; color:#111827;">🛒 Thêm</button>
                     </div>
                 </div>
             </div>
           `,
             )
             .join("");
-        }
+        };
 
-        // 3. Render sản phẩm bán chạy
-        const bestsellerGrid = document.getElementById("bestseller-product-grid");
-        if (bestsellerGrid) {
-          const bestsellers = products.slice(8, 12);
-          bestsellerGrid.innerHTML = bestsellers
-            .map(
-              (p) => `
-            <div class="product-card">
-                <img src="${p.image}" alt="${p.name}" />
-                <div class="product-info">
-                    <h3>${p.name}</h3>
-                    <p>${p.shortDescription || ""}</p>
-                    <div class="price">
-                        ${p.oldPrice ? `<span class="old-price">${formatPrice(p.oldPrice)}</span>` : ""}
-                        <span class="sale-price">${formatPrice(p.price)}</span>
-                    </div>
-                    <div style="font-size: 11px; color: #b91c1c; font-weight: 700; margin-bottom: 8px;">🔥 Tồn kho: còn ${p.stock} sản phẩm</div>
-                    <div class="card-actions">
-                        <a href="html/detail.html?id=${p.id}" class="btn" style="flex:1; background:#fff; color:#2563eb; border:1px solid #cbd5e1; text-align:center;">Chi tiết</a>
-                        <button class="btn" type="button" onclick="addToCart(${p.id})" style="flex:1; background:#fbbf24; color:#111827;">🛒 Thêm vào giỏ</button>
-                    </div>
-                </div>
-            </div>
-          `,
-            )
-            .join("");
-        }
+        renderGrid("hotsale-product-grid", products.slice(0, 4));
+        renderGrid("featured-product-grid", products.slice(4, 8));
+        renderGrid("bestseller-product-grid", products.slice(8, 12));
       });
 
       function handleSearch() {
         const kw = document.getElementById("search-keyword").value.trim();
-        if (kw) window.location.href = `html/products.html?search=${encodeURIComponent(kw)}`;
+        if (kw) window.location.href = `products.html?search=${encodeURIComponent(kw)}`;
       }
     </script>
   </body>
