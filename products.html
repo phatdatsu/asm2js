@@ -10,12 +10,7 @@
     <header class="shop-header">
       <a href="index.html" class="shop-logo">DATSU Store</a>
       <div class="shop-search">
-        <input
-          type="text"
-          id="filter-search"
-          placeholder="Tìm kiếm sản phẩm..."
-          oninput="applyFilters()"
-        />
+        <input type="text" id="filter-search" placeholder="Tìm kiếm sản phẩm..." oninput="applyFilters()" />
         <button type="button">🔍</button>
       </div>
       <div class="shop-user-actions" id="user-actions-container"></div>
@@ -35,157 +30,40 @@
         <aside class="filter-sidebar">
           <h3>🔍 Bộ lọc tìm kiếm</h3>
           <div style="margin-bottom: 16px">
-            <label
-              style="
-                display: block;
-                font-size: 13px;
-                font-weight: 600;
-                margin-bottom: 6px;
-                color: #334155;
-              "
-              >Tên sản phẩm</label
-            >
-            <input
-              type="text"
-              id="sidebar-search"
-              class="filter-input"
-              placeholder="Nhập tên sản phẩm..."
-              oninput="applyFilters()"
-            />
+            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #334155;">Tên sản phẩm</label>
+            <input type="text" id="sidebar-search" class="filter-input" placeholder="Nhập tên sản phẩm..." oninput="applyFilters()" />
           </div>
           <div style="margin-bottom: 16px">
-            <label
-              style="
-                display: block;
-                font-size: 13px;
-                font-weight: 600;
-                margin-bottom: 8px;
-                color: #334155;
-              "
-              >Danh mục</label
-            >
-            <div
-              style="
-                display: flex;
-                flex-direction: column;
-                gap: 6px;
-                font-size: 13px;
-                color: #475569;
-              "
-            >
-              <label
-                ><input
-                  type="radio"
-                  name="category"
-                  value="all"
-                  checked
-                  onchange="applyFilters()"
-                />
-                Tất cả</label
-              >
-              <label
-                ><input type="radio" name="category" value="Laptop" onchange="applyFilters()" />
-                Laptop</label
-              >
-              <label
-                ><input type="radio" name="category" value="Điện thoại" onchange="applyFilters()" />
-                Điện thoại</label
-              >
-              <label
-                ><input type="radio" name="category" value="Tai nghe" onchange="applyFilters()" />
-                Tai nghe</label
-              >
-              <label
-                ><input type="radio" name="category" value="Chuột" onchange="applyFilters()" />
-                Chuột</label
-              >
+            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #334155;">Danh mục</label>
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #475569;">
+              <label><input type="radio" name="category" value="all" checked onchange="applyFilters()" /> Tất cả</label>
+              <label><input type="radio" name="category" value="Laptop" onchange="applyFilters()" /> Laptop</label>
+              <label><input type="radio" name="category" value="Điện thoại" onchange="applyFilters()" /> Điện thoại</label>
+              <label><input type="radio" name="category" value="Tai nghe" onchange="applyFilters()" /> Tai nghe</label>
+              <label><input type="radio" name="category" value="Chuột" onchange="applyFilters()" /> Chuột</label>
             </div>
           </div>
           <div style="margin-bottom: 20px">
-            <label
-              style="
-                display: block;
-                font-size: 13px;
-                font-weight: 600;
-                margin-bottom: 8px;
-                color: #334155;
-              "
-              >Mức giá</label
-            >
-            <div
-              style="
-                display: flex;
-                flex-direction: column;
-                gap: 6px;
-                font-size: 13px;
-                color: #475569;
-              "
-            >
-              <label
-                ><input
-                  type="radio"
-                  name="priceRange"
-                  value="all"
-                  checked
-                  onchange="applyFilters()"
-                />
-                Tất cả mức giá</label
-              >
-              <label
-                ><input type="radio" name="priceRange" value="under2m" onchange="applyFilters()" />
-                Dưới 2 triệu</label
-              >
-              <label
-                ><input type="radio" name="priceRange" value="2to5m" onchange="applyFilters()" /> Từ
-                2 triệu đến 5 triệu</label
-              >
-              <label
-                ><input type="radio" name="priceRange" value="5to15m" onchange="applyFilters()" />
-                Từ 5 triệu đến 15 triệu</label
-              >
-              <label
-                ><input type="radio" name="priceRange" value="over15m" onchange="applyFilters()" />
-                Trên 15 triệu</label
-              >
+            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #334155;">Mức giá</label>
+            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #475569;">
+              <label><input type="radio" name="priceRange" value="all" checked onchange="applyFilters()" /> Tất cả mức giá</label>
+              <label><input type="radio" name="priceRange" value="under2m" onchange="applyFilters()" /> Dưới 2 triệu</label>
+              <label><input type="radio" name="priceRange" value="2to5m" onchange="applyFilters()" /> Từ 2 triệu đến 5 triệu</label>
+              <label><input type="radio" name="priceRange" value="5to15m" onchange="applyFilters()" /> Từ 5 triệu đến 15 triệu</label>
+              <label><input type="radio" name="priceRange" value="over15m" onchange="applyFilters()" /> Trên 15 triệu</label>
             </div>
           </div>
-          <button
-            class="btn"
-            onclick="resetFilters()"
-            style="width: 100%; background: #64748b; font-size: 13px; padding: 8px"
-          >
-            Đặt lại bộ lọc
-          </button>
+          <button class="btn" onclick="resetFilters()" style="width: 100%; background: #64748b; font-size: 13px; padding: 8px">Đặt lại bộ lọc</button>
         </aside>
 
         <section>
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              margin-bottom: 20px;
-              flex-wrap: wrap;
-              gap: 10px;
-            "
-          >
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
             <div>
               <h1 style="font-size: 22px; color: #0f172a; font-weight: 700">Sản phẩm</h1>
               <p id="product-count" style="font-size: 13px; color: #64748b">Hiển thị 30 sản phẩm</p>
             </div>
             <div>
-              <select
-                id="sort-select"
-                onchange="applyFilters()"
-                style="
-                  padding: 8px 12px;
-                  border: 1px solid #cbd5e1;
-                  border-radius: 6px;
-                  outline: none;
-                  background: #fff;
-                  font-size: 13px;
-                "
-              >
+              <select id="sort-select" onchange="applyFilters()" style="padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; background: #fff; font-size: 13px;">
                 <option value="default">Sắp xếp: Mặc định</option>
                 <option value="asc">Giá: Thấp đến cao</option>
                 <option value="desc">Giá: Cao đến thấp</option>
@@ -214,9 +92,7 @@
           return;
         }
 
-        grid.innerHTML = list
-          .map(
-            (p) => `
+        grid.innerHTML = list.map(p => `
           <div class="product-card">
               <img src="${p.image}" alt="${p.name}" />
               <div class="product-info">
@@ -233,42 +109,44 @@
                   </div>
               </div>
           </div>
-        `,
-          )
-          .join("");
+        `).join("");
       }
 
       function applyFilters() {
         if (typeof products === "undefined") return;
 
-        const searchInput =
-          document.getElementById("filter-search") || document.getElementById("sidebar-search");
+        const searchInput = document.getElementById("filter-search") || document.getElementById("sidebar-search");
         const keyword = searchInput ? searchInput.value.toLowerCase().trim() : "";
-
+        
         const catRadio = document.querySelector('input[name="category"]:checked');
-        const cat = catRadio ? catRadio.value : "all";
-
+        const cat = catRadio ? catRadio.value.toLowerCase().trim() : "all";
+        
         const priceRadio = document.querySelector('input[name="priceRange"]:checked');
         const priceRange = priceRadio ? priceRadio.value : "all";
-
+        
         const sortSelect = document.getElementById("sort-select");
         const sort = sortSelect ? sortSelect.value : "default";
 
         let result = [...products];
 
         if (cat !== "all") {
-          result = result.filter((p) => p.category.toLowerCase() === cat.toLowerCase());
+          result = result.filter(p => {
+            const pCat = (p.category || "").toLowerCase();
+            if (cat === "điện thoại") return pCat.includes("phone") || pCat.includes("điện thoại") || pCat.includes("mobile");
+            if (cat === "laptop") return pCat.includes("laptop") || pCat.includes("computer") || pCat.includes("pc");
+            if (cat === "tai nghe") return pCat.includes("headphone") || pCat.includes("earphone") || pCat.includes("tai nghe");
+            if (cat === "chuột") return pCat.includes("mouse") || pCat.includes("chuột");
+            return pCat === cat;
+          });
         }
 
-        if (priceRange === "under2m") result = result.filter((p) => p.price < 2000000);
-        else if (priceRange === "2to5m")
-          result = result.filter((p) => p.price >= 2000000 && p.price <= 5000000);
-        else if (priceRange === "5to15m")
-          result = result.filter((p) => p.price > 5000000 && p.price <= 15000000);
-        else if (priceRange === "over15m") result = result.filter((p) => p.price > 15000000);
+        if (priceRange === "under2m") result = result.filter(p => p.price < 2000000);
+        else if (priceRange === "2to5m") result = result.filter(p => p.price >= 2000000 && p.price <= 5000000);
+        else if (priceRange === "5to15m") result = result.filter(p => p.price > 5000000 && p.price <= 15000000);
+        else if (priceRange === "over15m") result = result.filter(p => p.price > 15000000);
 
         if (keyword) {
-          result = result.filter((p) => p.name.toLowerCase().includes(keyword));
+          result = result.filter(p => (p.name || "").toLowerCase().includes(keyword));
         }
 
         if (sort === "asc") result.sort((a, b) => a.price - b.price);
@@ -301,8 +179,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const sq = urlParams.get("search");
         if (sq) {
-          const searchInput =
-            document.getElementById("filter-search") || document.getElementById("sidebar-search");
+          const searchInput = document.getElementById("filter-search") || document.getElementById("sidebar-search");
           if (searchInput) searchInput.value = sq;
         }
         setTimeout(() => {
@@ -312,4 +189,3 @@
     </script>
   </body>
 </html>
-
