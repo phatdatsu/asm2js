@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopDienTu - Đăng nhập</title>
+    <link rel="stylesheet" href="../css/new-style.css" />
+    <style>
+      body.login-bg {
+        background: radial-gradient(circle at top left, #1e293b, #0f172a);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+      }
+      .login-container {
+        width: 100%;
+        max-width: 420px;
+        padding: 20px;
+      }
+      .login-box {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        border: 1px solid #e2e8f0;
+      }
+      .login-header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .login-header h2 {
+        font-size: 26px;
+        font-weight: 900;
+        color: #0f172a;
+        margin-bottom: 8px;
+      }
+      .login-header p {
+        font-size: 14px;
+        color: #64748b;
+      }
+      .input-group {
+        margin-bottom: 20px;
+      }
+      .input-group label {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 8px;
+      }
+      .input-group input {
+        width: 100%;
+        padding: 13px 16px;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        font-size: 14px;
+        outline: none;
+        background: #f8fafc;
+        transition: all 0.2s;
+      }
+      .input-group input:focus {
+        border-color: #ff6b00;
+        background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.1);
+      }
+      .btn-login {
+        width: 100%;
+        padding: 14px;
+        background: #ff6b00;
+        color: #ffffff;
+        border: none;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin-top: 10px;
+        box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
+      }
+      .btn-login:hover {
+        background: #e05e00;
+      }
+      .login-footer {
+        text-align: center;
+        margin-top: 24px;
+        font-size: 14px;
+        color: #64748b;
+      }
+      .login-footer a {
+        color: #ff6b00;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .login-footer a:hover {
+        text-decoration: underline;
+      }
+      .back-home {
+        display: block;
+        text-align: center;
+        margin-top: 16px;
+        font-size: 13px;
+        color: #94a3b8;
+        text-decoration: none;
+      }
+      .back-home:hover {
+        color: #0f172a;
+      }
+    </style>
+  </head>
+  <body class="login-bg">
+    <div class="login-container">
+      <div class="login-box">
+        <div class="login-header">
+          <h2>Đăng Nhập</h2>
+          <p>Truy cập vào tài khoản ShopDienTu của bạn</p>
+        </div>
+
+        <form onsubmit="handleLogin(event)">
+          <div class="input-group">
+            <label>Tên đăng nhập hoặc Email</label>
+            <input type="text" id="login-user" required placeholder="Nhập tài khoản..." />
+          </div>
+          <div class="input-group">
+            <label>Mật khẩu</label>
+            <input type="password" id="login-pass" required placeholder="••••••••" />
+          </div>
+          <button type="submit" class="btn-login">Đăng Nhập Ngay</button>
+        </form>
+
+        <div class="login-footer">Chưa có tài khoản? <a href="register.html">Đăng ký mới</a></div>
+        <a href="index.html" class="back-home">← Quay lại trang chủ</a>
+      </div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+      function handleLogin(e) {
+        e.preventDefault();
+        const inputUser = document.getElementById("login-user").value.trim();
+        const currentFullname = localStorage.getItem("cofe_fullname") || inputUser;
+
+        localStorage.setItem("cofe_isLoggedIn", "true");
+        localStorage.setItem("cofe_fullname", currentFullname);
+
+        alert("Đăng nhập thành công!");
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>

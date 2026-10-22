@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopDienTu - Liên hệ</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <header class="shop-header">
+      <a href="index.html" class="shop-logo">DATSU Store</a>
+      <div class="shop-search">
+        <input type="text" id="search-keyword" placeholder="Tìm kiếm sản phẩm..." />
+        <button type="button" onclick="handleSearch()">🔍</button>
+      </div>
+      <div class="shop-user-actions" id="user-actions-container"></div>
+    </header>
+
+    <nav class="shop-subnav container" style="max-width: 100%">
+      <div class="container shop-subnav-inner">
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html">Sản phẩm</a>
+        <a href="contact.html" class="active">Liên hệ</a>
+        <a href="about.html">Giới thiệu</a>
+      </div>
+    </nav>
+
+    <main class="container" style="padding: 40px 24px; flex: 1">
+      <div
+        style="
+          max-width: 600px;
+          margin: 0 auto;
+          background: #fff;
+          padding: 35px;
+          border-radius: 12px;
+          border: 1px solid #e2e8f0;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        "
+      >
+        <h1 style="font-size: 26px; font-weight: 700; color: #0f172a; margin-bottom: 10px">
+          📞 Liên hệ với chúng tôi
+        </h1>
+        <p style="color: #64748b; font-size: 14px; margin-bottom: 24px">
+          Bạn có thắc mắc hoặc cần hỗ trợ về sản phẩm thiết bị điện tử? Hãy gửi thông tin cho chúng
+          tôi.
+        </p>
+
+        <form onsubmit="handleContactSubmit(event)">
+          <div style="margin-bottom: 16px">
+            <label
+              style="
+                display: block;
+                font-size: 13px;
+                font-weight: 600;
+                margin-bottom: 6px;
+                color: #334155;
+              "
+              >Họ và tên</label
+            >
+            <input
+              type="text"
+              required
+              placeholder="Nhập họ tên của bạn..."
+              style="
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #cbd5e1;
+                border-radius: 6px;
+                font-size: 14px;
+              "
+            />
+          </div>
+          <div style="margin-bottom: 16px">
+            <label
+              style="
+                display: block;
+                font-size: 13px;
+                font-weight: 600;
+                margin-bottom: 6px;
+                color: #334155;
+              "
+              >Email</label
+            >
+            <input
+              type="email"
+              required
+              placeholder="Nhập địa chỉ email..."
+              style="
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #cbd5e1;
+                border-radius: 6px;
+                font-size: 14px;
+              "
+            />
+          </div>
+          <div style="margin-bottom: 20px">
+            <label
+              style="
+                display: block;
+                font-size: 13px;
+                font-weight: 600;
+                margin-bottom: 6px;
+                color: #334155;
+              "
+              >Nội dung tin nhắn</label
+            >
+            <textarea
+              rows="4"
+              required
+              placeholder="Nhập nội dung cần hỗ trợ..."
+              style="
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #cbd5e1;
+                border-radius: 6px;
+                font-size: 14px;
+              "
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="btn"
+            style="
+              width: 100%;
+              padding: 12px;
+              background: #2563eb;
+              border: none;
+              border-radius: 6px;
+              font-size: 15px;
+              font-weight: 700;
+              color: #fff;
+              cursor: pointer;
+            "
+          >
+            Gửi yêu cầu
+          </button>
+        </form>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container"><p>© 2026 ShopDienTu - DATSU - FPT Polytechnic</p></div>
+    </footer>
+
+    <script src="../js/app.js"></script>
+    <script>
+      function handleContactSubmit(e) {
+        e.preventDefault();
+        alert("Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi trong thời gian sớm nhất.");
+        e.target.reset();
+      }
+      function handleSearch() {
+        const keyword = document.getElementById("search-keyword").value.trim();
+        if (keyword) window.location.href = `products.html?search=${encodeURIComponent(keyword)}`;
+      }
+    </script>
+  </body>
+</html>

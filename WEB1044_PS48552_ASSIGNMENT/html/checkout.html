@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopDienTu - Thanh toán</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <!-- Kiểm tra bảo mật đăng nhập ngay khi load trang -->
+    <script>
+      if (localStorage.getItem("cofe_isLoggedIn") !== "true") {
+        alert("Bạn cần phải đăng nhập tài khoản mới có thể truy cập trang thanh toán!");
+        window.location.href = "login.html";
+      }
+    </script>
+
+    <header class="shop-header">
+      <a href="index.html" class="shop-logo">DATSU Store</a>
+      <div class="shop-user-actions" id="user-actions-container"></div>
+    </header>
+
+    <nav class="shop-subnav">
+      <div class="shop-subnav-inner">
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html">Sản phẩm</a>
+        <a href="contact.html">Liên hệ</a>
+        <a href="about.html">Giới thiệu</a>
+      </div>
+    </nav>
+
+    <main class="container" style="padding: 30px 24px; flex: 1">
+      <div style="margin-bottom: 20px">
+        <h1 style="font-size: 24px; font-weight: 700; color: #0f172a">Thanh toán đơn hàng</h1>
+        <p style="font-size: 13px; color: #64748b">
+          Vui lòng điền thông tin giao hàng và kiểm tra tóm tắt đơn hàng.
+        </p>
+      </div>
+
+      <form onsubmit="handleCheckout(event)" class="cart-layout">
+        <div>
+          <div
+            style="
+              background: #fff;
+              border: 1px solid #e2e8f0;
+              border-radius: 10px;
+              padding: 24px;
+              margin-bottom: 20px;
+            "
+          >
+            <h3
+              style="
+                font-size: 16px;
+                margin-bottom: 16px;
+                border-bottom: 1px solid #f1f5f9;
+                padding-bottom: 8px;
+                color: #0f172a;
+              "
+            >
+              1. Thông tin giao hàng
+            </h3>
+            <div style="margin-bottom: 12px">
+              <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px"
+                >Họ và tên</label
+              >
+              <input
+                type="text"
+                required
+                placeholder="Nhập họ và tên..."
+                style="width: 100%; padding: 9px; border: 1px solid #cbd5e1; border-radius: 6px"
+              />
+            </div>
+            <div style="margin-bottom: 12px">
+              <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px"
+                >Số điện thoại</label
+              >
+              <input
+                type="tel"
+                required
+                placeholder="Nhập số điện thoại..."
+                style="width: 100%; padding: 9px; border: 1px solid #cbd5e1; border-radius: 6px"
+              />
+            </div>
+            <div style="margin-bottom: 12px">
+              <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px"
+                >Địa chỉ nhận hàng</label
+              >
+              <input
+                type="text"
+                required
+                placeholder="Số nhà, đường, phường/xã, quận/huyện..."
+                style="width: 100%; padding: 9px; border: 1px solid #cbd5e1; border-radius: 6px"
+              />
+            </div>
+          </div>
+
+          <div
+            style="background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 24px"
+          >
+            <h3
+              style="
+                font-size: 16px;
+                margin-bottom: 16px;
+                border-bottom: 1px solid #f1f5f9;
+                padding-bottom: 8px;
+                color: #0f172a;
+              "
+            >
+              2. Phương thức thanh toán
+            </h3>
+            <label
+              style="
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 10px;
+                cursor: pointer;
+                font-size: 14px;
+              "
+            >
+              <input type="radio" name="payment" checked /> Thanh toán khi nhận hàng (COD)
+            </label>
+            <label
+              style="
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                cursor: pointer;
+                font-size: 14px;
+              "
+            >
+              <input type="radio" name="payment" /> Chuyển khoản ngân hàng QR
+            </label>
+          </div>
+        </div>
+
+        <div class="cart-summary-box" style="height: fit-content">
+          <h3
+            style="
+              font-size: 18px;
+              margin-bottom: 16px;
+              border-bottom: 1px solid #f1f5f9;
+              padding-bottom: 10px;
+              color: #0f172a;
+            "
+          >
+            Tóm tắt đơn hàng
+          </h3>
+          <div
+            id="checkout-items-summary"
+            style="margin-bottom: 15px; max-height: 200px; overflow-y: auto"
+          ></div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 10px;
+              font-size: 14px;
+            "
+          >
+            <span>Tạm tính</span><strong id="chk-subtotal">0 đ</strong>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 10px;
+              font-size: 14px;
+            "
+          >
+            <span>Phí giao hàng</span><strong>25.000 đ</strong>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 20px;
+              font-size: 16px;
+              border-top: 1px solid #f1f5f9;
+              padding-top: 12px;
+            "
+          >
+            <span>Tổng cộng</span
+            ><strong id="chk-total" style="color: #dc2626; font-size: 18px">0 đ</strong>
+          </div>
+          <button
+            type="submit"
+            class="btn"
+            style="
+              width: 100%;
+              text-align: center;
+              background: #16a34a;
+              padding: 12px;
+              font-size: 15px;
+              justify-content: center;
+              border: none;
+              border-radius: 6px;
+              color: #fff;
+              cursor: pointer;
+            "
+          >
+            Hoàn tất đặt hàng →
+          </button>
+        </div>
+      </form>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container"><p>© 2026 ShopDienTu - DATSU - FPT Polytechnic</p></div>
+    </footer>
+
+    <script src="../js/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const summaryBox = document.getElementById("checkout-items-summary");
+        const subtotalEl = document.getElementById("chk-subtotal");
+        const totalEl = document.getElementById("chk-total");
+
+        if (!cart || cart.length === 0) {
+          summaryBox.innerHTML = "<p style='font-size:13px; color:#64748b;'>Giỏ hàng trống.</p>";
+          subtotalEl.textContent = "0 đ";
+          totalEl.textContent = "25.000 đ";
+          return;
+        }
+
+        summaryBox.innerHTML = cart
+          .map(
+            (item) => `
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:8px;">
+            <span>${item.name} (x${item.quantity})</span>
+            <strong>${formatPrice(item.price * item.quantity)}</strong>
+          </div>
+        `,
+          )
+          .join("");
+
+        const subtotal = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+        subtotalEl.textContent = formatPrice(subtotal);
+        totalEl.textContent = formatPrice(subtotal + 25000);
+      });
+
+      function handleCheckout(e) {
+        e.preventDefault();
+        if (!cart || cart.length === 0) {
+          alert("Giỏ hàng của bạn đang trống!");
+          return;
+        }
+
+        const nameInput = e.target.querySelector('input[placeholder*="họ và tên"]').value;
+        const phoneInput = e.target.querySelector('input[placeholder*="số điện thoại"]').value;
+        const addressInput = e.target.querySelector('input[placeholder*="Số nhà"]').value;
+
+        const subtotal = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+        const total = subtotal + 25000;
+
+        const newOrder = {
+          id: Date.now().toString().slice(-6),
+          date: new Date().toLocaleDateString("vi-VN"),
+          name: nameInput,
+          phone: phoneInput,
+          address: addressInput,
+          items: [...cart],
+          total: total,
+          status: "Đang xử lý",
+        };
+
+        let orders = JSON.parse(localStorage.getItem("shop_orders")) || [];
+        orders.unshift(newOrder);
+        localStorage.setItem("shop_orders", JSON.stringify(orders));
+
+        alert("Đặt hàng thành công! Đơn hàng đã được ghi nhận vào lịch sử.");
+        localStorage.removeItem("shop_cart");
+        window.location.href = "history.html";
+      }
+    </script>
+  </body>
+</html>
