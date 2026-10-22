@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopDienTu - Lịch sử đơn hàng</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <header class="shop-header">
+      <a href="index.html" class="shop-logo">DATSU Store</a>
+      <div class="shop-search">
+        <input type="text" id="search-keyword" placeholder="Tìm kiếm sản phẩm..." />
+        <button type="button" onclick="handleSearch()">🔍</button>
+      </div>
+      <div class="shop-user-actions" id="user-actions-container"></div>
+    </header>
+
+    <nav class="shop-subnav container" style="max-width: 100%">
+      <div class="container shop-subnav-inner">
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html">Sản phẩm</a>
+        <a href="contact.html">Liên hệ</a>
+        <a href="about.html">Giới thiệu</a>
+      </div>
+    </nav>
+
+    <main class="container" style="padding: 30px 24px; flex: 1">
+      <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 20px">
+        📦 Lịch sử đơn hàng của bạn
+      </h1>
+      <div id="order-history-container"></div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container"><p>© 2026 ShopDienTu - DATSU - FPT Polytechnic</p></div>
+    </footer>
+
+    <script src="../js/app.js"></script>
+    <script>
+      function renderOrderHistory() {
+        const container = document.getElementById("order-history-container");
+        let orders = JSON.parse(localStorage.getItem("shop_orders")) || [];
+
+        if (orders.length === 0) {
+          container.innerHTML = `<div style="background:#fff; padding:30px; border-radius:10px; text-align:center; color:#64748b; border:1px solid #e2e8f0;">Bạn chưa có đơn hàng nào.</div>`;
+          return;
+        }
+
+        container.innerHTML = orders
+          .map(
+            (order, index) => `
+          <div style="background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:20px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #f1f5f9; padding-bottom:12px; margin-bottom:12px;">
+              <div>
+                <strong>Mã đơn hàng: #${order.id}</strong>
+                <span style="font-size:12px; color:#64748b; margin-left:10px;">Ngày đặt: ${order.date}</span>
+              </div>
+              <div>
+                <span style="padding:4px 10px; border-radius:4px; font-size:12px; font-weight:600; background:${order.status === "Đã hủy" ? "#fee2e2; color:#dc2626;" : "#dcfce7; color:#16a34a;"}">${order.status}</span>
+              </div>
+            </div>
+            <div style="margin-bottom:12px; font-size:14px;">
+              <p>👤 <strong>Người nhận:</strong> ${order.name} - ${order.phone}</p>
+              <p>📍 <strong>Địa chỉ:</strong> ${order.address}</p>
+            </div>
+            <div style="background:#f8fafc; padding:12px; border-radius:6px; margin-bottom:12px;">
+              ${order.items.map((i) => `<div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px;"><span>${i.name} (x${i.quantity})</span><strong>${formatPrice(i.price * i.quantity)}</strong></div>`).join("")}
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:15px; font-weight:700;">Tổng tiền: <strong style="color:#dc2626;">${formatPrice(order.total)}</strong></span>
+              ${order.status !== "Đã hủy" ? `<button onclick="cancelOrder(${index})" class="btn" style="background:#ef4444; padding:6px 14px; font-size:13px; border:none; border-radius:6px; color:#fff; cursor:pointer;">Hủy đơn hàng</button>` : ""}
+            </div>
+          </div>
+        `,
+          )
+          .join("");
+      }
+
+      window.cancelOrder = function (index) {
+        let orders = JSON.parse(localStorage.getItem("shop_orders")) || [];
+        if (orders[index]) {
+          orders[index].status = "Đã hủy";
+          localStorage.setItem("shop_orders", JSON.stringify(orders));
+          alert("Đã hủy đơn hàng thành công!");
+          renderOrderHistory();
+        }
+      };
+
+      document.addEventListener("DOMContentLoaded", renderOrderHistory);
+      function handleSearch() {
+        const kw = document.getElementById("search-keyword").value.trim();
+        if (kw) window.location.href = `products.html?search=${encodeURIComponent(kw)}`;
+      }
+    </script>
+  </body>
+</html>
