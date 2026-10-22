@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ShopDienTu - Sản phẩm</title>
-    <link rel="stylesheet" href="../css/style.css" />
+    <title>DATSU Store - Sản phẩm</title>
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
     <header class="shop-header">
@@ -73,7 +73,7 @@
                 color: #475569;
               "
             >
-              <label style="cursor: pointer"
+              <label
                 ><input
                   type="radio"
                   name="category"
@@ -83,19 +83,19 @@
                 />
                 Tất cả</label
               >
-              <label style="cursor: pointer"
+              <label
                 ><input type="radio" name="category" value="Laptop" onchange="applyFilters()" />
                 Laptop</label
               >
-              <label style="cursor: pointer"
+              <label
                 ><input type="radio" name="category" value="Điện thoại" onchange="applyFilters()" />
                 Điện thoại</label
               >
-              <label style="cursor: pointer"
+              <label
                 ><input type="radio" name="category" value="Tai nghe" onchange="applyFilters()" />
                 Tai nghe</label
               >
-              <label style="cursor: pointer"
+              <label
                 ><input type="radio" name="category" value="Chuột" onchange="applyFilters()" />
                 Chuột</label
               >
@@ -121,7 +121,7 @@
                 color: #475569;
               "
             >
-              <label style="cursor: pointer"
+              <label
                 ><input
                   type="radio"
                   name="priceRange"
@@ -131,19 +131,19 @@
                 />
                 Tất cả mức giá</label
               >
-              <label style="cursor: pointer"
+              <label
                 ><input type="radio" name="priceRange" value="under2m" onchange="applyFilters()" />
                 Dưới 2 triệu</label
               >
-              <label style="cursor: pointer"
+              <label
                 ><input type="radio" name="priceRange" value="2to5m" onchange="applyFilters()" /> Từ
                 2 triệu đến 5 triệu</label
               >
-              <label style="cursor: pointer"
+              <label
                 ><input type="radio" name="priceRange" value="5to15m" onchange="applyFilters()" />
                 Từ 5 triệu đến 15 triệu</label
               >
-              <label style="cursor: pointer"
+              <label
                 ><input type="radio" name="priceRange" value="over15m" onchange="applyFilters()" />
                 Trên 15 triệu</label
               >
@@ -201,21 +201,24 @@
       <div class="container"><p>© 2026 ShopDienTu - DATSU - FPT Polytechnic</p></div>
     </footer>
 
-    <script src="../js/app.js"></script>
+    <script src="js/app.js"></script>
     <script>
       function renderCatalog(list) {
         const grid = document.getElementById("product-catalog-grid");
-        document.getElementById("product-count").textContent = `Hiển thị ${list.length} sản phẩm`;
+        const countEl = document.getElementById("product-count");
+        if (countEl) countEl.textContent = `Hiển thị ${list.length} sản phẩm`;
         if (!grid) return;
-        if (list.length === 0) {
+
+        if (!list || list.length === 0) {
           grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 40px;">Không tìm thấy sản phẩm phù hợp.</p>`;
           return;
         }
+
         grid.innerHTML = list
           .map(
             (p) => `
           <div class="product-card">
-              <img src="../${p.image}" alt="${p.name}" />
+              <img src="${p.image}" alt="${p.name}" />
               <div class="product-info">
                   <h3>${p.name}</h3>
                   <p>${p.shortDescription || ""}</p>
@@ -226,7 +229,7 @@
                   <div style="font-size: 11px; color: #b91c1c; font-weight: 700; margin-bottom: 8px;">🔥 Tồn kho: còn ${p.stock} sản phẩm</div>
                   <div class="card-actions">
                       <a href="detail.html?id=${p.id}" class="btn" style="flex:1; background:#fff; color:#2563eb; border:1px solid #cbd5e1; text-align:center;">Chi tiết</a>
-                      <button class="btn" type="button" onclick="addToCart(${p.id})" style="flex:1; background:#fbbf24; color:#111827;">🛒 Thêm vào giỏ</button>
+                      <button class="btn" type="button" onclick="addToCart(${p.id})" style="flex:1; background:#fbbf24; color:#111827;">🛒 Thêm</button>
                   </div>
               </div>
           </div>
@@ -236,14 +239,26 @@
       }
 
       function applyFilters() {
-        const keyword = document.getElementById("sidebar-search").value.toLowerCase().trim();
-        const cat = document.querySelector('input[name="category"]:checked').value;
-        const priceRange = document.querySelector('input[name="priceRange"]:checked').value;
-        const sort = document.getElementById("sort-select").value;
+        if (typeof products === "undefined") return;
+
+        const searchInput =
+          document.getElementById("filter-search") || document.getElementById("sidebar-search");
+        const keyword = searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+        const catRadio = document.querySelector('input[name="category"]:checked');
+        const cat = catRadio ? catRadio.value : "all";
+
+        const priceRadio = document.querySelector('input[name="priceRange"]:checked');
+        const priceRange = priceRadio ? priceRadio.value : "all";
+
+        const sortSelect = document.getElementById("sort-select");
+        const sort = sortSelect ? sortSelect.value : "default";
 
         let result = [...products];
-        if (cat !== "all")
+
+        if (cat !== "all") {
           result = result.filter((p) => p.category.toLowerCase() === cat.toLowerCase());
+        }
 
         if (priceRange === "under2m") result = result.filter((p) => p.price < 2000000);
         else if (priceRange === "2to5m")
@@ -252,7 +267,9 @@
           result = result.filter((p) => p.price > 5000000 && p.price <= 15000000);
         else if (priceRange === "over15m") result = result.filter((p) => p.price > 15000000);
 
-        if (keyword) result = result.filter((p) => p.name.toLowerCase().includes(keyword));
+        if (keyword) {
+          result = result.filter((p) => p.name.toLowerCase().includes(keyword));
+        }
 
         if (sort === "asc") result.sort((a, b) => a.price - b.price);
         else if (sort === "desc") result.sort((a, b) => b.price - a.price);
@@ -261,19 +278,38 @@
       }
 
       function resetFilters() {
-        document.getElementById("sidebar-search").value = "";
-        document.querySelector('input[name="category"][value="all"]').checked = true;
-        document.querySelector('input[name="priceRange"][value="all"]').checked = true;
-        document.getElementById("sort-select").value = "default";
-        renderCatalog(products);
+        const searchInput = document.getElementById("filter-search");
+        if (searchInput) searchInput.value = "";
+        const sidebarSearch = document.getElementById("sidebar-search");
+        if (sidebarSearch) sidebarSearch.value = "";
+
+        const allCat = document.querySelector('input[name="category"][value="all"]');
+        if (allCat) allCat.checked = true;
+
+        const allPrice = document.querySelector('input[name="priceRange"][value="all"]');
+        if (allPrice) allPrice.checked = true;
+
+        const sortSelect = document.getElementById("sort-select");
+        if (sortSelect) sortSelect.value = "default";
+
+        if (typeof products !== "undefined") {
+          renderCatalog(products);
+        }
       }
 
       document.addEventListener("DOMContentLoaded", () => {
         const urlParams = new URLSearchParams(window.location.search);
         const sq = urlParams.get("search");
-        if (sq) document.getElementById("sidebar-search").value = sq;
-        renderCatalog(products);
+        if (sq) {
+          const searchInput =
+            document.getElementById("filter-search") || document.getElementById("sidebar-search");
+          if (searchInput) searchInput.value = sq;
+        }
+        setTimeout(() => {
+          applyFilters();
+        }, 50);
       });
     </script>
   </body>
 </html>
+
